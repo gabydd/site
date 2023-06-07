@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav {
+  display: flex;
+}
+
+.nav-item {
+  margin-left: 2em;
+}
+
+.link {
+  text-decoration: none;
+  color: gray;
+}
+
+.link:hover {
+  color: green;
+}
+
+.link-current {
+  text-decoration: none;
+  color: purple;
+}
+
+.link-current:hover {
+  color: blue;
+}
