@@ -30,7 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - run: wget https://sourceforge.net/projects/sbcl/files/sbcl/2.3.5/sbcl-2.3.5-x86-64-linux-binary.tar.bz2
-      - run: tar -xf sblc-2.3.5-x86-64-linux-binary
+      - run: tar -xf sblc-2.3.5-x86-64-linux-binary.tar.bz2
       - run: ./sbcl-2.3.4-x86-64-linux/run-sbcl.sh --script page.lisp
       - name: Setup Pages
         uses: actions/configure-pages@v3
