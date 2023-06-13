@@ -1,5 +1,5 @@
 (div ()
-     (h1 () "working on:")
+     (h2 () "working on:")
      (p  () "This site")
      (p  () "proxy state with firebase")
      (p  () "HELIX!"))

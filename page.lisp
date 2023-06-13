@@ -3,19 +3,21 @@
 (defparameter pages '("index" "about" "projects" "helix"))
 
 (defun page-header (current-page)
-  (nav (:class "header")
-       "Gaby"
+  (div (:class "header")
+       (div (:class "title")
+            (div () "Gaby")
+            (a (:href "https://github.com/gabydd") (img (:src "octocat-lisp.png" :style "width:min(16vw, 16vh);"))))
        (div (:class "nav")
             (dohtml (page pages)
-                    (div (:class "nav-item")
-                          (a (:class (if (equal page current-page) "link-current" "link")
-                              :href (conc-str page ".html"))
-                             page))))))
+                    (a (:class (conc-str "link" (when (equal page current-page) " link-current"))
+                        :href (conc-str page ".html"))
+                       page)))))
 
 (defparameter footer
-  (div ()
+  (div (:class "footer")
        "Made with a little bit of lisp and a whole lot of love"
-       (a (:href "https://github.com/gabydd") "Github")))
+       (img (:src "lisp-warning.png" :style "width:max(6vw, 6vh);margin-left:auto;"))))
+
 (defmacro template (page &rest body)
   `(conc-str "<!DOCTYPE HTML>"
              (html (:lang "en")
@@ -27,7 +29,7 @@
                          (link (:rel "stylesheet" :href "style.css")))
                    (body ()
                          (page-header ,page)
-                         ,@body
+                         (div (:class "body") ,@body)
                          footer))))
 
 (dolist (page pages)

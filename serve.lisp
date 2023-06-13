@@ -9,4 +9,6 @@
 (cl-inotify:with-inotify (inotify t ("." '(:modify :dont-follow)))
   (cl-inotify:do-events (event inotify :blocking-p t)
     (print "A file changed: regenerating")
-    (load "page.lisp")))
+    (handler-case (load "page.lisp")
+        (error (c)
+          (print c)))))
