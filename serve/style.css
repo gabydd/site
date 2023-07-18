@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
 }
+
 .header {
   font-size: min(10vw, 10vh);
   display: flex;
@@ -39,6 +40,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
 .body {
   font-size: min(5vh, 5vw);
   margin-left: 8vw;
@@ -58,4 +60,9 @@ body {
 
 .h2 {
   font-size: min(6vh, 6vw);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }

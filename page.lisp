@@ -6,7 +6,7 @@
   (div (:class "header")
        (div (:class "title")
             (div () "Gaby")
-            (a (:href "https://github.com/gabydd") (img (:src "octocat-lisp.png" :style "width:min(16vw, 16vh);"))))
+            (a (:href "https://github.com/gabydd") (img (:src "octocat-lisp.png" :width "200" :height "200" :style "width:min(16vw, 16vh);"))))
        (div (:class "nav")
             (dohtml (page pages)
                     (a (:class (conc-str "link" (when (equal page current-page) " link-current"))
@@ -16,7 +16,7 @@
 (defparameter footer
   (div (:class "footer")
        "Made with a little bit of lisp and a whole lot of love"
-       (img (:src "lisp-warning.png" :style "width:max(6vw, 6vh);margin-left:auto;"))))
+       (img (:src "lisp-warning.png" :width "83" :height "128" :style "width:max(6vw, 6vh);margin-left:auto;"))))
 
 (defmacro template (page &rest body)
   `(conc-str "<!DOCTYPE HTML>"
