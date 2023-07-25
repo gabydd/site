@@ -18,6 +18,8 @@
        "Made with a little bit of lisp and a whole lot of love"
        (img (:src "lisp-warning.png" :width "83" :height "128" :style "width:max(6vw, 6vh);margin-left:auto;"))))
 
+(defparameter styles (eval (with-open-file (file (conc-str "css.lisp")) (read file))))
+
 (defmacro template (page &rest body)
   `(conc-str "<!DOCTYPE HTML>"
              (html (:lang "en")
@@ -26,7 +28,7 @@
                          (meta (:name "viewport" :content "width=device-width, initial-scale=1.0"))
                          (meta (:http-equiv "X-UA-Compatible" :content "ie=edge"))
                          (title () "The site of Gaby")
-                         (link (:rel "stylesheet" :href "style.css")))
+                         (style () styles))
                    (body ()
                          (page-header ,page)
                          (div (:class "body") ,@body)
