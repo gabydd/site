@@ -35,4 +35,10 @@
                          footer))))
 
 (dolist (page pages)
-  (write-html (template page (eval (with-open-file (file (conc-str page ".lisp")) (read file)))) page))
+  (write-html 
+   (template page
+              (eval
+               (with-open-file
+                (file (conc-str page ".lisp"))
+                (read file))))
+   page))

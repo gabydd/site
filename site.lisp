@@ -1,12 +1,29 @@
 (defmacro conc-str (&rest body)
   `(concatenate 'string ,@body))
 
+(defun apply-conc-str (strings)
+  (apply #'concatenate (cons 'string strings)))
+
 (defun attrs (attributes)
-  (if attributes (conc-str " " (string-downcase (symbol-name (car attributes))) "=\"" (cadr attributes) "\"" (attrs (cddr attributes))) ""))
+  (if attributes
+    (conc-str " "
+              (string-downcase (symbol-name (car attributes)))
+              "=\""
+              (cadr attributes)
+              "\""
+              (attrs (cddr attributes)))
+    ""))
 
 (defmacro element (el)
   `(defmacro ,el (attributes &rest children)
-     `(conc-str "<" ,,(string-downcase (symbol-name el)) (attrs (list ,@attributes)) ">" ,@children "</" ,,(string-downcase (symbol-name el)) ">")))
+     `(conc-str "<"
+                ,,(string-downcase (symbol-name el))
+                (attrs (list ,@attributes))
+                ">"
+                ,@children
+                "</"
+                ,,(string-downcase (symbol-name el))
+                ">")))
 
 (defun write-html (html file-name)
   (with-open-file (file (conc-str "serve/" file-name ".html") :direction :output :if-exists :supersede)
@@ -17,21 +34,44 @@
     `(apply #'concatenate (let ((,binds (list 'string)))
                             (dolist (,var ,list (nreverse ,binds))
                               (push ,@body ,binds))))))
-(defun apply-conc-str (strings)
-  (apply #'concatenate (cons 'string strings)))
+
 (defmacro css (&rest styles)
-  `(apply-conc-str (mapcar #'decleration ',styles)))
-(defun decleration (styles)
-  (conc-str (apply-conc-str (mapcar (lambda (selector) (string-downcase (symbol-name selector))) (butlast styles))) "{" (properties (car (last styles))) "}"))
+  `(apply-conc-str (mapcar #'rule ',styles)))
+
+(defun rule (styles)
+  (conc-str
+   (apply-conc-str
+    (mapcar
+     (lambda (selector)
+       (string-downcase (symbol-name selector)))
+     (butlast styles)))
+   "{"
+   (properties (car (last styles)))
+   "}"))
+
 (defun properties (styles)
-  (apply-conc-str (mapcar (lambda (prop) (conc-str (string-downcase (symbol-name (car prop))) ":" (vals (cdr prop) nil) ";")) styles)))
-(defun vals (value list-p)
-  (apply-conc-str (mapcar (lambda (val next) (cond 
-    ((listp val) (conc-str (vals val t) ")"))
-    ((null next) (value->string val))
-    ((listp next) (conc-str (value->string val) "("))
-    (list-p (conc-str (value->string val) ", "))
-    (t (conc-str (value->string val) " ")))) value (append (cdr value) (cons nil nil)))))
+  (apply-conc-str
+   (mapcar
+    (lambda (declaration)
+      (conc-str
+       (string-downcase (symbol-name (car declaration)))
+       ":"
+       (property-value (cdr declaration) nil)
+       ";"))
+    styles)))
+
+(defun property-value (value list-p)
+  (apply-conc-str
+   (mapcar
+    (lambda (val next)
+      (cond
+        ((listp val) (conc-str (property-value val t) ")"))
+        ((null next) (value->string val))
+        ((listp next) (conc-str (value->string val) "("))
+        (list-p (conc-str (value->string val) ", "))
+        (t (conc-str (value->string val) " "))))
+    value
+    (append (cdr value) (cons nil nil)))))
 
 (defun value->string (value)
   (cond
