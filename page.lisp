@@ -12,7 +12,7 @@
                         :href (conc-str page ".html"))
                        page))
             (a (:class "link"
-                        :href "git.gabydd.dev")
+                        :href "https://git.gabydd.dev")
                        "git"))))
 
 (defparameter footer
