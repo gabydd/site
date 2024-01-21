@@ -5,13 +5,15 @@
 (defun page-header (current-page)
   (div (:class "header")
        (div (:class "title")
-            (div () "Gaby")
-            (a (:href "https://github.com/gabydd") (img (:src "octocat-lisp.png" :width "200" :height "200" :style "width:min(16vw, 16vh);"))))
+            (div () "Gaby"))
        (div (:class "nav")
             (dohtml (page pages)
                     (a (:class (conc-str "link" (when (equal page current-page) " link-current"))
                         :href (conc-str page ".html"))
-                       page)))))
+                       page))
+            (a (:class "link"
+                        :href "git.gabydd.dev")
+                       "git"))))
 
 (defparameter footer
   (div (:class "footer")
