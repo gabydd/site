@@ -1,1 +1,0 @@
-(p () "Gaby: York U")

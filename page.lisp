@@ -1,6 +1,6 @@
 (load "site.lisp")
 
-(defparameter pages '("index" "about" "projects" "helix"))
+(defparameter pages '("index" "projects"))
 
 (defun page-header (current-page)
   (div (:class "header")
@@ -12,13 +12,13 @@
                         :href (conc-str page ".html"))
                        page))
             (a (:class "link"
-                        :href "https://git.gabydd.dev")
-                       "git"))))
+                        :href "https://github.com/gabydd")
+                       "github"))))
 
 (defparameter footer
   (div (:class "footer")
        "Made with a little bit of lisp and a whole lot of love"
-       (img (:src "lisp-warning.png" :width "83" :height "128" :style "width:max(6vw, 6vh);margin-left:auto;"))))
+       (img (:src "lisp-warning.png" :width "83" :height "128" :style "width:min(6vw, 6vh);margin-left:auto;"))))
 
 (defparameter styles (eval (with-open-file (file (conc-str "css.lisp")) (read file))))
 
